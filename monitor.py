@@ -25,8 +25,8 @@ class Process:
             statusf = open('/proc/%s/status' % self.pid)
         except IOError:
             self.name = ''
-            self.uid, statusf = [0] * 2
-        self.vmsize, self.vmrss = [0] * 2
+            self.uid = '0'
+            statusf = 0
         if statusf:
             for line in statusf:
                 if line.startswith('Name:'): self.name = line.split()[1]
