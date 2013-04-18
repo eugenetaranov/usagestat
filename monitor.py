@@ -25,20 +25,16 @@ class Process:
             statusf = open('/proc/%s/status' % self.pid)
         except IOError:
             self.name = ''
-            self.uid = '0'
-            statusf, self.vmsize, self.vmrss = [0] * 3
+            self.uid, statusf = [0] * 2
+        self.vmsize, self.vmrss = [0] * 2
         if statusf:
             for line in statusf:
                 if line.startswith('Name:'): self.name = line.split()[1]
                 if line.startswith('Uid:'): self.uid = line.split()[1]
                 if line.startswith('VmSize:'):
-                    self.vmsize = line.split()[1]
-                else:
-                    self.vmsize = 0
+                    self.vmsize = int(line.split()[1])
                 if line.startswith('VmRSS:'):
-                    self.vmrss = line.split()[1]
-                else:
-                    self.vmrss = 0
+                    self.vmrss = int(line.split()[1])
             statusf.close()
         try:
             statf = open('/proc/%s/stat' % self.pid)
