@@ -27,6 +27,7 @@ class Process:
             self.name = ''
             self.uid = '0'
             statusf = 0
+        self.vmsize, self.vmrss = [0] * 2
         if statusf:
             for line in statusf:
                 if line.startswith('Name:'): self.name = line.split()[1]
